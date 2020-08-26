@@ -1,7 +1,10 @@
 package com.luv2code.hibernate.demo.entity;
 
+import javax.annotation.processing.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,6 +12,7 @@ import javax.persistence.Table;
 @Table(name="student")
 public class Student {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name="first_name")
 	private String firstName;
