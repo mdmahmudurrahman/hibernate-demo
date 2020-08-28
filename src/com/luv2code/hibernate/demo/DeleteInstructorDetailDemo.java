@@ -23,12 +23,15 @@ public class DeleteInstructorDetailDemo {
 			// start a transaction
 			session.beginTransaction();
 			// get instructor detail by id
-			int theId = 2;
+			int theId = 6;
 			InstructorDetail instructorDetail = session.get(InstructorDetail.class, theId);
 			// print instructor detail
 			System.out.println(instructorDetail);
 			// print associated instructor
 			System.out.println(instructorDetail.getInstructor());
+			
+			// Remove the bi-directional associated reference
+			instructorDetail.getInstructor().setInstructorDetail(null);
 			session.delete(instructorDetail);
 			
 			// commit the transaction
