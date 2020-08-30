@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,6 +33,14 @@ public class Course {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
 	private List<Review> reviews;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, 
+		CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinTable(
+			name = "course_student", 
+			joinColumns = @JoinColumn(name="course_id"),
+			inverseJoinColumns = @JoinColumn(name="student_id")
+		)
+	private List<Student> students;
 	
 	public Course() {
 		// TODO Auto-generated constructor stub
@@ -72,8 +82,25 @@ public class Course {
 		this.reviews = reviews;
 	}
 	
-	// Add convenience method to add reviews
 	
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+	
+	// Add convenience method to add students
+	public void addStudents(Student student) {
+		if (students == null) {
+			students = new ArrayList<>();
+		}
+		
+		students.add(student);
+	}
+
+	// Add convenience method to add reviews
 	public void add(Review review) {
 		if(reviews == null) {
 			reviews = new ArrayList<>();
